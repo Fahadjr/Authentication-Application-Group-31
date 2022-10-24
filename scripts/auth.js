@@ -33,15 +33,9 @@ createForm.addEventListener('submit', (e) => {
     imageUploadTask
         .then((snapshot => snapshot.ref.getDownloadURL()))
         .then(url => {
-<<<<<<< HEAD
-            //console.log('url---> ', url);
+            console.log('url---> ', url);
             //alert("image uploaded");
             //const indexImage = document.querySelector("#photo");
-=======
-            console.log('url---> ', url);
-            alert("image uploaded");
-            const indexImage = document.querySelector("#photo");
->>>>>>> db9234610b9f5d051b54ff812954312682e43f18
             //indexImage.src = url;
             //imageDownloadUrl = url;
 
