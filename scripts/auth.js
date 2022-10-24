@@ -1,6 +1,6 @@
 //list to auth state change 
 auth.onAuthStateChanged(user => {
-    console.log(user);
+    
     if(user){
         //db
         db.collection('profile').onSnapshot(snapshot => {
@@ -27,15 +27,21 @@ createForm.addEventListener('submit', (e) => {
         contentType:imageFile.type
     }
 
-    const imageUploadTask = st.child(imageNameConst).put(imageFile, imageMetadata);
+    const imageUploadTask = st.child(imageNameConst).put(imageFile, imageMetadata)
     
-    // var imageDownloadUrl;
+   // var imageDownloadUrl;
     imageUploadTask
         .then((snapshot => snapshot.ref.getDownloadURL()))
         .then(url => {
-            console.log('url---> ', url);
+<<<<<<< HEAD
+            //console.log('url---> ', url);
             //alert("image uploaded");
             //const indexImage = document.querySelector("#photo");
+=======
+            console.log('url---> ', url);
+            alert("image uploaded");
+            const indexImage = document.querySelector("#photo");
+>>>>>>> db9234610b9f5d051b54ff812954312682e43f18
             //indexImage.src = url;
             //imageDownloadUrl = url;
 
@@ -62,30 +68,12 @@ signupForm.addEventListener('submit', (e) => {
     const email = signupForm['signup-email'].value;
     const password = signupForm['signup-password'].value;
 
-    const profileImage = signupForm['profile-image'].files[0];
-    const imageNameConst = new Date() + '-' + profileImage.name
+    auth.createUserWithEmailAndPassword(email, password).then(cred => {
+        const sModal = document.querySelector('#modal-signup');
+        M.Modal.getInstance(sModal).close();
+        signupForm.reset();
+    });
 
-    const imageMetadata = {
-        contentType:profileImage.type
-    }
-
-    const profileImageUploadTask = st.child(imageNameConst).put(profileImage, imageMetadata);
-
-    profileImageUploadTask
-        .then((snapshot => snapshot.ref.getDownloadURL()))
-        .then(url => {
-            auth.createUserWithEmailAndPassword(email, password).then(cred => {
-                return db.collection('users').doc(cred.user.uid).set({
-                    bio: signupForm['signup-bio'].value,
-                    userName: signupForm['signup-name'].value,
-                    profileUrl: url
-                });       
-            }).then(() => {
-                const sModal = document.querySelector('#modal-signup');
-                M.Modal.getInstance(sModal).close();
-                signupForm.reset();
-            });
-        });
 });
 
 //logouts
